@@ -25,4 +25,8 @@ test('Clicking login starts oauth flow', async () => {
     const url = await page.url();
 
     expect(url).toMatch(/accounts\.google\.com/);
-})
+});
+
+// the problem with oauth process is that we can get captchas because of automated testing
+// the solution can be to fake the session
+// or to get the captchas in some kind of interface and solve them when needed
