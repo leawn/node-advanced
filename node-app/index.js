@@ -14,6 +14,8 @@ require('./services/cache');
 const db = mongoose.connect(keys.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
+app.disable('x-powered-by');
+// normally we'd use helmet.js
 
 app.use(bodyParser.json());
 app.use(
