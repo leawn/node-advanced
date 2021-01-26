@@ -1,0 +1,6 @@
+require('../models/User');
+
+const mongoose = require('mongoose');
+const keys = require('../config/keys');
+
+const db = mongoose.connect(keys.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
