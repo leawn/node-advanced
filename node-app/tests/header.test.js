@@ -30,3 +30,28 @@ test('Clicking login starts oauth flow', async () => {
 // the problem with oauth process is that we can get captchas because of automated testing
 // the solution can be to fake the session
 // or to get the captchas in some kind of interface and solve them when needed
+
+test('When signed in, shows logout button', async () => {
+    const id = '6008060f434f1031ed8edee3';
+
+    const Buffer = require('safe-buffer').Buffer;
+    const sessionObject = {
+        passport: {
+            user: id
+        }
+    }
+
+    const sessionString = Buffer
+        .from(JSON.stringify(sessionObject))
+        .toString('base64');
+
+    const Keygrip = require('keygrip');
+    const keys = require('../config/keys');
+    const keygrip = new Keygrip([keys.cookieKey]);
+    const sig = keygrip.sign('express:sess=' + sessionString);
+
+    console.log(sessionString, sig);
+    //eyJwYXNzcG9ydCI6eyJ1c2VyIjoiNjAwODA2MGY0MzRmMTAzMWVkOGVkZWUzIn19
+    //rccRyCIyivpgLoBRmZRZvEskF9Y
+
+});
