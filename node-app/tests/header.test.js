@@ -12,7 +12,7 @@ afterEach(async () => {
 });
 
 test('The header has the correct text.', async () => {
-    const text = page.getContentsOf('a.brand-logo');
+    const text = await page.getContentsOf('a.brand-logo');
     expect(text).toEqual('Blogster');
 });
 
