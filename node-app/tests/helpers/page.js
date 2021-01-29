@@ -35,6 +35,43 @@ class CustomPage {
     async getContentsOf(selector) {
         return this.page.$eval(selector, el => el.innerHTML);``
     }
+
+    async get(path) {
+        return await this.page.evaluate(_path => {
+            return fetch(_path, {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .catch(err => console.log(err));
+        }, path);
+    }
+
+    async post(path, data) {
+        return await this.page.evaluate((_path, _data) => {
+            return fetch(_path, {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(_data)
+            })
+                .then(res => res.json())
+                .catch(err => console.log(err));
+        }, path, data)
+    }
+
+    async execRequests(actions) {
+        return await Promise.all(
+            actions.map(({ method, path, data }) => {
+                return this[method](path, data);
+            })
+        );
+    }
 }
 
 module.exports = CustomPage;
